@@ -22,6 +22,8 @@ class loginModel extends Model
       $sqlToken = $this->_db->prepare("UPDATE usuarios SET TOKEN = :token WHERE USUARIO = :user AND PASSWORD = :pass AND ESTADO = :state");
       $sqlToken->execute(array(':token' => md5($token), ':user' => $_POST['USER'], ':pass' => md5($_POST['PASS']), ':state' => 1));
 
+      //Ahora funcionara con passwordhash
+
       $sql = $this->_db->prepare("SELECT ID_USER, TOKEN, USUARIO, NOMBRES, APELLIDOS, ESTADO, FECHA_CREACION, FECHA_EXPIRA FROM usuarios WHERE USUARIO = :user AND PASSWORD = :pass");
       $sql->execute(array(':user' => $_POST['USER'], ':pass' => md5($_POST['PASS'])));
       if($result = $sql->fetchAll(PDO::FETCH_ASSOC))
